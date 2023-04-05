@@ -1,9 +1,9 @@
 const jwt=require("jsonwebtoken")
 
-exports.authentication = async function (req, res , next) {
+const authentication = async function (req, res , next) {
     try {
         let token = req.headers.authorization
-        if (!token) return res.status(400).send({ status: false, msg: "Token is not provided" })
+        if (!token) return res.status(401).send({ status: false, msg: "Token is not provided" })
         token = token.slice(7);
 
 
@@ -28,3 +28,5 @@ exports.authentication = async function (req, res , next) {
         return res.status(500).send({status:false,msg:err.message})
     }
 }
+
+module.exports=authentication;

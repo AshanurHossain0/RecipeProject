@@ -5,7 +5,6 @@ const recipeSchema=new mongoose.Schema({
     name:{
         type:String,
         trim:true,
-        lowercase:true,
         required:true
     },
     items:{
@@ -26,6 +25,10 @@ const recipeSchema=new mongoose.Schema({
     },
     rating:{
         type:Number
+    },
+    totalReview:{
+        type:Number,
+        default:0
     },
     isDeleted:{
         type:Boolean,

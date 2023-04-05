@@ -16,6 +16,10 @@ const reviewSchema = new mongoose.Schema({
     },
     rate: {
         type: Number
+    },
+    isDeleted:{
+        type:Boolean,
+        default:false
     }
 })
 

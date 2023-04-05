@@ -6,6 +6,7 @@ const multer=require("multer");
 
 const connectDatabase = require("./config/database");
 
+
 const userRoute = require("./routes/api/user");
 const recipeRoute = require("./routes/api/recipe");
 const reviewRoute = require("./routes/api/review");
@@ -25,7 +26,7 @@ app.get("/", (req, res) => res.send("API Running"));
 
 // Define Routes
 app.use("/api/users", userRoute);
-// app.use("/api/recipes", recipeRoute);
+app.use("/api/recipes",recipeRoute);
 // app.use("/api/reviews", reviewRoute);
 
 
