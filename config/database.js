@@ -5,7 +5,7 @@ const { dbConfig } = require("./config");
 const connectDatabase = async () => {
   try {
     await mongoose.connect(
-      `mongodb+srv://${dbConfig.username}:${dbConfig.password}@${dbConfig.host}/?retryWrites=true&w=majority`,
+      `mongodb+srv://${dbConfig.username}:${dbConfig.password}@${dbConfig.host}/Recipe?retryWrites=true&w=majority`,
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,

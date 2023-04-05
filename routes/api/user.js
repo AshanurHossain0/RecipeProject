@@ -1,5 +1,5 @@
 const express = require("express");
-
+const authentication=require("../../middleware/auth")
 const UserController = require("../../controllers/userController");
 
 const router = express.Router();
@@ -10,6 +10,7 @@ const userController = new UserController();
  * @desc    Register User
  * @access  Public
  */
-router.get("/", userController.getAll.bind(userController));
+router.post("/register",userController.createUser);
+router.post("/login",userController.loginUser);
 
 module.exports = router;
