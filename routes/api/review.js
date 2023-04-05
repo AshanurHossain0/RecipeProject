@@ -1,5 +1,6 @@
 const express = require("express");
 
+const authentication=require("../../middleware/auth")
 const ReviewController = require("../../controllers/reviewController");
 
 const router = express.Router();
@@ -10,6 +11,6 @@ const reviewController = new ReviewController();
  * @desc    Register User
  * @access  Public
  */
-router.get("/");
+router.post("/",authentication,reviewController.createReview);
 
 module.exports = router;

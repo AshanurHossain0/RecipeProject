@@ -27,7 +27,7 @@ app.get("/", (req, res) => res.send("API Running"));
 // Define Routes
 app.use("/api/users", userRoute);
 app.use("/api/recipes",recipeRoute);
-// app.use("/api/reviews", reviewRoute);
+app.use("/api/reviews", reviewRoute);
 
 
 const PORT = appConfig.port;

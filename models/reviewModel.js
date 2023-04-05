@@ -5,17 +5,20 @@ const reviewSchema = new mongoose.Schema({
     recipeId:{
         type: ObjectId,
         ref: "recipeData",
-        trim: true
+        required:true
     },
     reviewer: {
         type: ObjectId,
-        ref: "userData"
+        ref: "userData",
+        required:true
     },
     review: {
         type: String
     },
     rate: {
-        type: Number
+        type: Number,
+        min:1,
+        max:5
     },
     isDeleted:{
         type:Boolean,
