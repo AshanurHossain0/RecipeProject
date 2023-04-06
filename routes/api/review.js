@@ -7,10 +7,12 @@ const router = express.Router();
 const reviewController = new ReviewController();
 
 /**
- * @route   POST api/users
+ * @route   POST & DELETE api/reviews
  * @desc    Register User
- * @access  Public
+ * @access  users
  */
 router.post("/",authentication,reviewController.createReview);
+
+router.delete("/:reviewId",authentication,reviewController.deleteReview);
 
 module.exports = router;

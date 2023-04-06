@@ -7,9 +7,9 @@ const router = express.Router();
 const recipeController = new RecipeController();
 
 /**
- * @route   POST api/users
+ * @route   POST, GET, DELETE api/recipes
  * @desc    Register User
- * @access  Public
+ * @access  users
  */
 router.post("/",authentication,recipeController.createRecipe);
 

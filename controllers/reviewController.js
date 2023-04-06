@@ -4,31 +4,57 @@ const recipeSchema = require("./../models/recipeModel");
 const recipeModel = mongoose.model("recipeData", recipeSchema);
 const reviewModel = mongoose.model("reviewData", reviewSchema);
 
-class reviewController{
+class reviewController {
   constructor() {
   }
-  async createReview(req,res){
-    let {recipeId,review,rate}=req.body;
-    
+  async createReview(req, res) {
+    try {
+      let { recipeId, review, rate } = req.body;
 
-    if(!recipeId) return res.status(400).send({status:false,msg:"recipeId is mandatory"});
-    if(!review || !rate) return res.status(400).send({status:false,msg:"review and rating is mandatory"});
 
-    rate=rate-0;
-    const recipeData=await recipeModel.findOne({_id:recipeId,isDeleted:false})
+      if (!recipeId) return res.status(400).send({ status: false, msg: "recipeId is mandatory" });
+      if (!review || !rate) return res.status(400).send({ status: false, msg: "review and rating is mandatory" });
 
-    if(!recipeData) return res.status(404).send({status:false,msg:"Recipe not foumd"});
+      rate = rate - 0;
+      const recipeData = await recipeModel.findOne({ _id: recipeId, isDeleted: false })
 
-    req.body.reviewer=req.token.userId;
+      if (!recipeData) return res.status(404).send({ status: false, msg: "Recipe not foumd" });
 
-    const reviewData=await reviewModel.create(req.body);
+      req.body.reviewer = req.token.userId;
 
-    let rating=(recipeData.rating || 0);
+      const reviewData = await reviewModel.create(req.body);
 
-    rating=((rating * recipeData.totalReview +rate)/(recipeData.totalReview +1)).toFixed(1)
-    await recipeModel.findOneAndUpdate({_id:recipeId},{rating:rating, $inc:{totalReview:1}})
+      let rating = (recipeData.rating || 0);
 
-    return res.status(200).send({status:true,msg:"Review successful",data:reviewData});
+      rating = ((rating * recipeData.totalReview + rate) / (recipeData.totalReview + 1)).toFixed(2)
+      await recipeModel.findOneAndUpdate({ _id: recipeId }, { rating: rating, $inc: { totalReview: 1 } })
+
+      return res.status(200).send({ status: true, msg: "Review successful", data: reviewData });
+    }
+    catch (err) {
+      return res.status(500).send({ status: false, msg: err.message })
+    }
+  }
+
+  async deleteReview(req, res) {
+    try {
+      const reviewId = req.params.reviewId;
+      const userId=req.token.userId;
+
+      const reviewData = await reviewModel.findOneAndUpdate({ _id: reviewId, reviewer:userId, isDeleted:false},{isDeleted:true});
+      if (!reviewData) return res.status(403).send({ status: false, msg: "Deletion denied" });
+
+      const recipeData= await recipeModel.findById(reviewData.recipeId);
+
+      let rating = recipeData.rating;
+      rating=((rating * recipeData.totalReview - reviewData.rate)/(recipeData.totalReview -1)).toFixed(2)
+      await recipeModel.findOneAndUpdate({_id:recipeData._id},{rating:rating,$inc:{totalReview:-1}})
+
+      return res.status(200).send({ status: true, msg: "Review deleted successfully" });
+    }
+    catch (err) {
+      return res.status(500).send({ status: false, msg: err.message })
+    }
   }
 }
 
