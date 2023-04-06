@@ -10,7 +10,6 @@ class RecipeController {
   async createRecipe(req, res) {
     try {
       let { name, items, process } = req.body;
-      items = JSON.parse(items);
 
       if (!name || !name.trim()) return res.status(400).send({ status: false, msg: "Recipe name is mandatory" })
       if (!items || items.length == 0) return res.status(400).send({ status: false, msg: "Items are mandatory" })
@@ -27,6 +26,19 @@ class RecipeController {
   }
 
   async getRecipe(req, res) {
+    try {
+      const recipeId = req.params.recipeId;
+      const recipeData = await recipeModel.findOne({ _id: recipeId, isDeleted: false }).populate("author", { __v: 0, _id: 0, password: 0 }).select({ isDeleted: 0, __v: 0 });
+
+      if (!recipeData) return res.status(404).send({ status: false, msg: "Recipe not found" });
+      return res.status(200).send({ status: true, msg: "Success", data: recipeData })
+    }
+    catch (err) {
+      return res.status(500).send({ status: false, msg: err.message })
+    }
+  }
+
+  async searchRecipe(req, res) {
     try {
       let name = req.query.name;
 

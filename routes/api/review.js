@@ -11,7 +11,7 @@ const reviewController = new ReviewController();
  * @desc    Register User
  * @access  users
  */
-router.post("/",authentication,reviewController.createReview);
+router.post("/:recipeId",authentication,reviewController.createReview);
 
 router.delete("/:reviewId",authentication,reviewController.deleteReview);
 

@@ -7,12 +7,13 @@ const recipeSchema=new mongoose.Schema({
         trim:true,
         required:true
     },
-    items:{
-        type:[String],
-        trim:true,
-        lowercase:true,
-        required:true
-    },
+    items:[
+        {
+            type:String,
+            trim:true,
+            lowercase:true
+        }
+    ],
     process:{
         type:String,
         trim:true,

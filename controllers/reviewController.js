@@ -9,10 +9,9 @@ class reviewController {
   }
   async createReview(req, res) {
     try {
-      let { recipeId, review, rate } = req.body;
+      let {review, rate } = req.body;
+      let recipeId=req.params.recipeId;
 
-
-      if (!recipeId) return res.status(400).send({ status: false, msg: "recipeId is mandatory" });
       if (!review || !rate) return res.status(400).send({ status: false, msg: "review and rating is mandatory" });
 
       rate = rate - 0;
@@ -22,7 +21,7 @@ class reviewController {
 
       req.body.reviewer = req.token.userId;
 
-      const reviewData = await reviewModel.create(req.body);
+      const reviewData = await reviewModel.create({...req.body,recipeId:recipeId});
 
       let rating = (recipeData.rating || 0);
 

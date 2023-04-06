@@ -13,7 +13,9 @@ const recipeController = new RecipeController();
  */
 router.post("/",authentication,recipeController.createRecipe);
 
-router.get("/",authentication,recipeController.getRecipe);
+router.get("/:recipeId",authentication,recipeController.getRecipe);
+
+router.get("/",authentication,recipeController.searchRecipe);
 
 router.delete("/:recipeId",authentication,recipeController.deleteRecipe);
 
