@@ -9,3 +9,7 @@ exports.validEmail = (email) => {
 exports.validGender=(gender)=>{
     return ["male","female","others"].includes(gender);
 }
+
+exports.validPassword=(password)=>{
+    return (password.length>4 && password.length<=14)
+}

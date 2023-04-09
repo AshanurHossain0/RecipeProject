@@ -2,6 +2,7 @@ require("dotenv").config({ path: "./config/.env" });
 
 const express = require("express");
 const { appConfig } = require("./config/config");
+const cors=require("cors");
 
 const connectDatabase = require("./config/database");
 
@@ -11,6 +12,8 @@ const recipeRoute = require("./routes/api/recipe");
 const reviewRoute = require("./routes/api/review");
 
 const app = express();
+
+app.use(cors());
 
 // Connect to the database
 connectDatabase();

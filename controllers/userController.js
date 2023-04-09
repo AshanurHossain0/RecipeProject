@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const userSchema = require("./../models/userModel");
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
-const { validName, validEmail, validGender } = require("../validator")
+const { validName, validEmail, validGender,validPassword } = require("../validator")
 
 const userModel = mongoose.model("userData", userSchema);
 
@@ -24,6 +24,8 @@ class UserController {
       email = email.trim();
       if (!validEmail(email)) return res.status(400).send({ status: false, msg: "Invalid email" });
 
+      if(!validPassword(password)) return res.status(400).send({status:false,msg:"password length shoild be minimum:5, maximum:14"})
+
       if (gender) {
         if (!validGender(gender)) return res.status(400).send({ status: false, msg: "Please provide gender correctly" });
       }
@@ -36,6 +38,7 @@ class UserController {
       let userDetails = { fullName: fullName, email: email, password: hashing, gender: gender, city: city }
 
       let userData = await userModel.create(userDetails);
+
       return res.status(201).send({ status: true, msg: "Successfully registered", data: userData })
     }
     catch (err) {
@@ -69,7 +72,7 @@ class UserController {
 
       res.setHeader("x-api-key", token)
 
-      return res.status(200).send({ status: true, msg: "Login successful",token:token});
+      return res.status(200).send({ status: true, msg: "Login successful", token: token });
     }
     catch (err) {
       return res.status(500).send({ status: false, msg: err.message })
