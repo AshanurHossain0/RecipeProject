@@ -2,9 +2,8 @@ const jwt=require("jsonwebtoken")
 
 const authentication = async function (req, res , next) {
     try {
-        let token = req.headers.authorization
+        let token = req.headers["x-auth-token"]
         if (!token) return res.status(401).send({ status: false, msg: "Token is not provided" })
-        token = token.slice(7);
 
 
         jwt.verify(token, "recipesApp", function (err, decodedToken) {

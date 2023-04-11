@@ -12,5 +12,6 @@ const userController = new UserController();
  */
 router.post("/register",userController.createUser);
 router.post("/login",userController.loginUser);
+router.get("/auth",authentication,userController.getUser);
 
 module.exports = router;
