@@ -12,8 +12,13 @@ class RecipeController {
       let { name, items, process } = req.body;
 
       if (!name || !name.trim()) return res.status(400).send({ status: false, msg: "Recipe name is mandatory" })
-      if (!items || items.length == 0) return res.status(400).send({ status: false, msg: "Items are mandatory" })
+
       if (!process || !process.trim()) return res.status(400).send({ status: false, msg: "Please provide process" })
+
+      items=items.filter((item)=>{
+        return item.trim().length !=0
+      })
+      if (!items || items.length == 0) return res.status(400).send({ status: false, msg: "Items are mandatory" })
 
       let recipeDetails = { name: name, items: items, process: process, author: req.token.userId };
 
