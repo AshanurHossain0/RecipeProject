@@ -72,7 +72,7 @@ class UserController {
 
       res.setHeader("x-auth-key", token)
 
-      return res.status(200).send({ status: true, msg: "Login successful", token: token });
+      return res.status(200).send({ status: true, msg: "Login successful", token: token, userId:findUser._id });
     }
     catch (err) {
       return res.status(500).send({ status: false, msg: err.message })

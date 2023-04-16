@@ -53,7 +53,7 @@ class RecipeController {
       }
       queryObj.isDeleted = false;
 
-      let allRecipes = await recipeModel.find(queryObj).populate("author", { __v: 0, _id: 0, password: 0 }).select({ isDeleted: 0, __v: 0 });
+      let allRecipes = await recipeModel.find(queryObj).populate("author", { __v: 0, password: 0 }).select({ isDeleted: 0, __v: 0 });
 
       if (allRecipes.length == 0) return res.status(404).send({ status: false, msg: "Recipe not found" });
       return res.status(200).send({ status: true, msg: "Success", data: allRecipes });
