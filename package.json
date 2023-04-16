@@ -5,8 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js",
-    "postinstall": "cp ./config/config.yml.sample ./config/config.yml && cp ./config/.env.sample ./config/.env"
+    "start": "node server.js",
+    "encrypt:config": "TYPE=encrypt FILE_TO_BE_ENCRYPTED='./config/config.yml' node crypt.js",
+    "decrypt:config": "TYPE=decrypt FILE_TO_BE_DECRYPTED='./config/config.yml.enc' node crypt.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.0",
