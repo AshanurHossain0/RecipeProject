@@ -62,7 +62,7 @@ class UserController {
       let hash = findUser.password;
 
       let isCorrect = bcrypt.compareSync(password, hash)
-      if (!isCorrect) return res.status(400).send({ status: false, message: "Password is incorrect" })
+      if (!isCorrect) return res.status(400).send({ status: false, msg: "Password is incorrect" })
 
       let token = jwt.sign({
         userId: findUser._id.toString(),
