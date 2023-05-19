@@ -158,8 +158,21 @@ password Encryption. User can give review and rating to other user's recipe.
   - *On error* - Return a suitable error message with a valid HTTP status code.
 
 ## Review APIs
-
+### POST /api/reviews/:recipeId
+- Get review, rating from request body and recipeId from path param.
+- _Response format_
+  - *On success* - Send reviewData with HTTP status 200 .
+  - *On error* - Return a suitable error message with a valid HTTP status code.
+### POST /api/reviews/:reviewId
+- Get reviewId from path param.
+- Delete review by using reviewId. 
+- _Response format_
+  - *On success* - Send a success message with HTTP status 200 .
+  - *On error* - Return a suitable error message with a valid HTTP status code.
+ 
 ## Middleware
 ### Authentication
 - Make sure all the restricted routes are protected.
 
+### Authorization
+- Make sure that only authorized user can delete recipe and review.
